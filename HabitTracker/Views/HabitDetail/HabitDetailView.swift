@@ -9,17 +9,19 @@ import SwiftUI
 import Kingfisher
 
 struct HabitDetailView: View {
-    @ObservedObject var habit: Habit
+    @ObservedObject var habitEntity: HabitEntity
     @State private var selectedDate = Date()
     @State private var selectedTime = 30
     @State private var isAddingTime = false
     @EnvironmentObject var habitLibrary: HabitLibrary
+    @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.presentationMode) private var presentationMode
     
     var body: some View {
         ScrollView {
             VStack {
-                HabitHeaderView(habit: habit)
-                HabitDescriptionView(description: habit.description, minutes: habit.totalTime)
+                HabitHeaderView(habitEntity: habitEntity)
+                HabitDescriptionView(description: habitEntity.stringDescription, minutes: habitEntity.totalMinutesSpend())
                     .padding()
                 if isAddingTime {
                     TimeConfigurationView(selectedMinutes: $selectedTime, selectedDate: $selectedDate)
@@ -31,7 +33,7 @@ struct HabitDetailView: View {
                     }
                 }, title: isAddingTime ? "Validate" : "Add time")
                     .padding()
-                ForEach(habit.timeSlots) { time in
+                ForEach(habitEntity.spendTimes()) { time in
                     TimeCellView(spentTime: time)
                         .padding()
                     Rectangle()
@@ -39,14 +41,34 @@ struct HabitDetailView: View {
                         .frame(height: 0.5)
                 }
             }
-        }
+        }.navigationBarItems(trailing: Button(action: {
+            viewContext.delete(habitEntity)
+            do {
+                try viewContext.save()
+                self.presentationMode.wrappedValue.dismiss()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }, label: {
+            Image(systemName: "trash")
+                .foregroundColor(.black)
+                .padding()
+        }))
     }
     
     private func addNewTime()
     {
         habitLibrary.objectWillChange.send()
-        let newTime = SpentTime(date: selectedDate, minutes: selectedTime)
-        habit.timeSlots.append(newTime)
+        let newTimeSlots = SpendTimeEntity(context: viewContext)
+        newTimeSlots.id = UUID()
+        newTimeSlots.date = selectedDate
+        newTimeSlots.minutes = Int64(selectedTime)
+        habitEntity.addToTimeSlots(newTimeSlots)
+        do {
+            try viewContext.save()
+        } catch {
+            print("Error: cannot save new timeSlotsEntity in context.")
+        }
         toggleEditionMode()
     }
     
@@ -57,9 +79,21 @@ struct HabitDetailView: View {
 }
 
 struct HabitDetailView_Previews: PreviewProvider {
-    static var habit = HabitLibrary().testHabits[1]
+    static private let persistentController = PersistenceController.preview
+    static private let habitEntity: HabitEntity = {
+        let habitEntity = HabitEntity(context: persistentController.container.viewContext)
+        habitEntity.id = UUID()
+        habitEntity.name = "Habit test"
+        habitEntity.stringDescription = "Description test"
+        habitEntity.isFavorite = false
+        habitEntity.imageUrl = URL(string: "https://images.pexels.com/photos/235922/pexels-photo-235922.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500")
+        return habitEntity
+    }()
     
     static var previews: some View {
-        HabitDetailView(habit: habit)
+        NavigationView {
+            HabitDetailView(habitEntity: habitEntity)
+        }
     }
 }
+

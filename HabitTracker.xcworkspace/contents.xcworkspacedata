@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/valentin/LocalDocuments/Formations/DeveloppeurLibreSwiftUI/HabitTracker/HabitTracker/CoreData/SpendTimeEntity+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/valentin/LocalDocuments/Formations/DeveloppeurLibreSwiftUI/HabitTracker/HabitTracker/CoreData/SpendTimeEntity+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:HabitTracker/CoreData/HabitEntity+CoreDataClass.swift">
    </FileRef>
    <FileRef

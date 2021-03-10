@@ -26,9 +26,9 @@ struct HomeView: View {
                                         .fill(Color.white)
                                         .shadow(color: Color(Color.RGBColorSpace.sRGB, white: 0, opacity: 0.2), radius: 4, x: 0.0, y: 0.0)
                                     NavigationLink(
-                                        destination: HabitDetailView(habit: Habit(habitEntity: habitEntity)),
+                                        destination: HabitDetailView(habitEntity: habitEntity),
                                         label: {
-                                            HabitCellView(habit: Habit(habitEntity: habitEntity))
+                                            HabitCellView(habitEntity: habitEntity)
                                                 .foregroundColor(.black)
                                         })
                                 }.animation(.default)

@@ -19,6 +19,8 @@
 		A76A950E25F5F94C003A5165 /* StatisticsHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76A950D25F5F94C003A5165 /* StatisticsHabitView.swift */; };
 		A76A951225F600D2003A5165 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76A951125F600D2003A5165 /* StatisticsView.swift */; };
 		A76A951925F6048C003A5165 /* RankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76A951825F6048C003A5165 /* RankingView.swift */; };
+		A77571DF25F8A16300AD637A /* SpendTimeEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77571DD25F8A16300AD637A /* SpendTimeEntity+CoreDataClass.swift */; };
+		A77571E025F8A16300AD637A /* SpendTimeEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77571DE25F8A16300AD637A /* SpendTimeEntity+CoreDataProperties.swift */; };
 		A778300125F0B32A00D125A0 /* HabitDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778300025F0B32A00D125A0 /* HabitDescriptionView.swift */; };
 		A778300425F0B46100D125A0 /* TimeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778300325F0B46100D125A0 /* TimeCellView.swift */; };
 		A778300725F0B4A000D125A0 /* HabitHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778300625F0B4A000D125A0 /* HabitHeaderView.swift */; };
@@ -55,6 +57,8 @@
 		A76A950D25F5F94C003A5165 /* StatisticsHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsHabitView.swift; sourceTree = "<group>"; };
 		A76A951125F600D2003A5165 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		A76A951825F6048C003A5165 /* RankingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingView.swift; sourceTree = "<group>"; };
+		A77571DD25F8A16300AD637A /* SpendTimeEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SpendTimeEntity+CoreDataClass.swift"; path = "/Users/valentin/LocalDocuments/Formations/DeveloppeurLibreSwiftUI/HabitTracker/HabitTracker/CoreData/SpendTimeEntity+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		A77571DE25F8A16300AD637A /* SpendTimeEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SpendTimeEntity+CoreDataProperties.swift"; path = "/Users/valentin/LocalDocuments/Formations/DeveloppeurLibreSwiftUI/HabitTracker/HabitTracker/CoreData/SpendTimeEntity+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		A778300025F0B32A00D125A0 /* HabitDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDescriptionView.swift; sourceTree = "<group>"; };
 		A778300325F0B46100D125A0 /* TimeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCellView.swift; sourceTree = "<group>"; };
 		A778300625F0B4A000D125A0 /* HabitHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitHeaderView.swift; sourceTree = "<group>"; };
@@ -221,6 +225,8 @@
 		A7CC817B25F762C3009FF302 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				A77571DD25F8A16300AD637A /* SpendTimeEntity+CoreDataClass.swift */,
+				A77571DE25F8A16300AD637A /* SpendTimeEntity+CoreDataProperties.swift */,
 				A7CC819725F765E5009FF302 /* HabitEntity+CoreDataClass.swift */,
 				A7CC819825F765E5009FF302 /* HabitEntity+CoreDataProperties.swift */,
 				A7CC818A25F7649D009FF302 /* HabitTracker.xcdatamodeld */,
@@ -346,10 +352,12 @@
 				A76A951925F6048C003A5165 /* RankingView.swift in Sources */,
 				A796231925E63C1D000055EC /* AddHabitButton.swift in Sources */,
 				A778300E25F0B88000D125A0 /* TimeConfigurationView.swift in Sources */,
+				A77571E025F8A16300AD637A /* SpendTimeEntity+CoreDataProperties.swift in Sources */,
 				A7CC818C25F7649D009FF302 /* HabitTracker.xcdatamodeld in Sources */,
 				A796231325E63707000055EC /* Data.swift in Sources */,
 				A796231625E6385B000055EC /* HabitCellView.swift in Sources */,
 				A796231025E636B1000055EC /* Habit.swift in Sources */,
+				A77571DF25F8A16300AD637A /* SpendTimeEntity+CoreDataClass.swift in Sources */,
 				A778300125F0B32A00D125A0 /* HabitDescriptionView.swift in Sources */,
 				A7CC819525F7656C009FF302 /* Persistence.swift in Sources */,
 				A720172F25C0C96500815D70 /* HomeView.swift in Sources */,
