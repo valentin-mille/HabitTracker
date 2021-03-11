@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StatisticsHabitView: View {
-    @ObservedObject var habit: Habit
+    @ObservedObject var habitEntity: HabitEntity
 
     var body: some View {
         VStack {
@@ -44,13 +44,14 @@ struct StatisticsHabitView: View {
         return lastWeekCalendar.reversed()
     }
     
-    private func lastWeekSlots() -> [SpentTime]
+    private func lastWeekSlots() -> [SpendTimeEntity]
     {
         let calendar = Calendar.current
         let weekAgo = calendar.date(byAdding: .day, value: -7, to: Date())!
-        var slots = [SpentTime]()
+        var slots = [SpendTimeEntity]()
         
-        for slot in habit.timeSlots {
+        guard let timeSlots = habitEntity.timeSlots else { return [] }
+        for slot in Array(timeSlots) as! [SpendTimeEntity] {
             if slot.date > weekAgo {
                 slots.append(slot)
             }
@@ -69,7 +70,7 @@ struct StatisticsHabitView: View {
             statistics[day] = 0
             for slot in slots {
                 if formatter.string(from: slot.date) == day {
-                    statistics[day]! += slot.minutes
+                    statistics[day]! += Int(slot.minutes)
                 }
             }
         }
@@ -105,9 +106,18 @@ private struct BarChart: View {
 }
 
 struct StatisticsHabitView_Previews: PreviewProvider {
-    static let habit = HabitLibrary().testHabits[0]
+    static private let persistentController = PersistenceController.preview
+    static private let habitEntity: HabitEntity = {
+        let habitEntity = HabitEntity(context: persistentController.container.viewContext)
+        habitEntity.id = UUID()
+        habitEntity.name = "Habit test"
+        habitEntity.stringDescription = "Description test"
+        habitEntity.isFavorite = false
+        habitEntity.imageUrl = URL(string: "https://images.pexels.com/photos/235922/pexels-photo-235922.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500")
+        return habitEntity
+    }()
     
     static var previews: some View {
-        StatisticsHabitView(habit: habit)
+        StatisticsHabitView(habitEntity: habitEntity)
     }
 }

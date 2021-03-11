@@ -8,25 +8,35 @@
 import SwiftUI
 
 struct RankingView: View {
-    @ObservedObject var habitLibrary: HabitLibrary
+    @FetchRequest(entity: HabitEntity.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \HabitEntity.name, ascending: true)]) var habits: FetchedResults<HabitEntity>
 
     var body: some View {
         HStack(alignment: .bottom) {
             let habit = rankedHabit()
-            PodiumStep(habit: habit[0], rank: .first)
-            PodiumStep(habit: habit[1], rank: .second)
-            PodiumStep(habit: habit[2], rank: .third)
+            if habit.count >= 1 {
+                PodiumStep(habit: habit[0], rank: .first)
+            }
+            if habit.count >= 2 {
+                PodiumStep(habit: habit[1], rank: .second)
+            }
+            if habit.count >= 3 {
+                PodiumStep(habit: habit[2], rank: .third)
+            }
         }
     }
     
-    private func rankedHabit() -> [Habit] {
-        let sortedHabits = habitLibrary.testHabits.sorted { $0.totalTime > $1.totalTime }
-        return Array(sortedHabits.prefix(upTo: 3))
+    private func rankedHabit() -> [HabitEntity] {
+        let sortedHabits = habits.sorted { $0.totalMinutesSpend() > $1.totalMinutesSpend() }
+        var habitNumberToGet = 3
+        if sortedHabits.count < 3 {
+            habitNumberToGet = sortedHabits.count
+        }
+        return Array(sortedHabits.prefix(upTo: habitNumberToGet))
     }
 }
 
 private struct PodiumStep: View {
-    @ObservedObject var habit: Habit
+    @ObservedObject var habit: HabitEntity
     let rank: Rank
     
     var body: some View {
@@ -34,7 +44,7 @@ private struct PodiumStep: View {
             Text(habit.name)
                 .font(.system(size: 18))
                 .fontWeight(.semibold)
-            Text("\(habit.totalTime) min")
+            Text("\(habit.totalMinutesSpend()) min")
                 .font(.footnote)
                 .fontWeight(.light)
             ZStack {
@@ -62,9 +72,7 @@ private enum Rank: Int {
 }
 
 struct RankingView_Previews: PreviewProvider {
-    @StateObject static var habitLibrary = HabitLibrary()
-    
     static var previews: some View {
-        RankingView(habitLibrary: habitLibrary)
+        RankingView()
     }
 }

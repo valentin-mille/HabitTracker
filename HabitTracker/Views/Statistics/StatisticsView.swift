@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct StatisticsView: View {
-    @ObservedObject var habitLibrary: HabitLibrary
+    @FetchRequest(entity: HabitEntity.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \HabitEntity.name, ascending: true)]) var habits: FetchedResults<HabitEntity>
     
     var body: some View {
         ScrollView {
             VStack {
-                RankingView(habitLibrary: habitLibrary)
+                RankingView()
                     .padding()
-                ForEach(habitLibrary.testHabits) { habit in
+                ForEach(habits) { habit in
                     VStack(alignment: .leading, spacing: 32) {
                         Text(habit.name)
                             .font(.title)
                             .fontWeight(.bold)
-                        StatisticsHabitView(habit: habit)
+                        StatisticsHabitView(habitEntity: habit)
                             .frame(minHeight: 200)
                     }.padding()
                 }
@@ -30,9 +30,7 @@ struct StatisticsView: View {
 }
 
 struct StatisticsView_Previews: PreviewProvider {
-    @StateObject static var habitLibrary = HabitLibrary()
-    
     static var previews: some View {
-        StatisticsView(habitLibrary: habitLibrary)
+        StatisticsView()
     }
 }

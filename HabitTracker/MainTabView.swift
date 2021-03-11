@@ -14,7 +14,7 @@ struct MainTabView: View {
         TabView {
             HomeView(habitLibrary: habitLibrary)
                 .tabItem { Image(systemName: "rectangle.grid.1x2") }
-            StatisticsView(habitLibrary: habitLibrary)
+            StatisticsView()
                 .tabItem { Image(systemName: "chart.bar") }
         }
     }
